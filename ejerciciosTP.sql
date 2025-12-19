@@ -1,11 +1,8 @@
 /*EJERCICIO 1 - Crear Base de Datos*/
 CREATE DATABASE veterinaria_patitas_felices;
-
 USE veterinaria_patitas_felices;
 
 /*EJERCICIO 2 - Crear tabla duenos*/
-USE veterinaria_patitas_felices;
-
 CREATE TABLE duenos(
 	id int PRIMARY KEY AUTO_INCREMENT,
 	nombre varchar(50) not null,
@@ -15,8 +12,6 @@ CREATE TABLE duenos(
 );
 
 /*EHERCICIO 3 - Crear tabla mascotas*/
-USE veterinaria_patitas_felices;
-
 CREATE TABLE mascotas(
 	id int PRIMARY KEY AUTO_INCREMENT,
     id_dueno int not null,
@@ -27,8 +22,6 @@ CREATE TABLE mascotas(
 );
 
 /*EJERCICIO 4 - Crear tabla veterinarios*/
-USE veterinaria_patitas_felices;
-
 CREATE TABLE veterinarios(
 	id int PRIMARY KEY AUTO_INCREMENT,    
 	nombre varchar(50) not null,
@@ -38,8 +31,6 @@ CREATE TABLE veterinarios(
 );
 
 /*EJERCICIO 5 - Crear tabla historial_clinico*/
-USE veterinaria_patitas_felices;
-
 CREATE TABLE historial_clinico(
 	id int PRIMARY KEY AUTO_INCREMENT,    
 	id_mascota int not null,
@@ -52,32 +43,24 @@ CREATE TABLE historial_clinico(
 
 /*EJERCICIO 6 - Insertar registros*/
 /*3 dueños con información completa*/
-use veterinaria_patitas_felices;
-
 insert into duenos(nombre,apellido,telefono,direccion)
 VALUES ('Juan Carlos','Medina','3815153426','Av. Roca 1258'),
 ('Miguel','Flores','3814852456','Silvano Bores 542'),
 ('Marcela Luz','Quintero','3813789123','Calle de Barcelona 1041');
 
 /*3 mascotas, cada una asociada a un dueño*/
-use veterinaria_patitas_felices;
-
 insert into mascotas(id_dueno, nombre, especie, fecha_nacimiento)
 VALUES (1,'Rocco Rodolfo','perro','2020-05-14'),
 (2,'Alvin Martin','Conejo','2023-08-03'),
 (3,'Mike Morel','gato','2018-10-25');
 
 /*3 veterinarios con especialidades distintas*/
-use veterinaria_patitas_felices;
-
 insert into veterinarios(nombre, apellido, matricula, especialidad)
 VALUES ('Lucia','Padilla','vt25468','Cirugía Veterinaria'),
 ('Ignacio','Corbalan','vt852456','Oncología'),
 ('Paula','Albarracin','vt789651','Clínica general');
 
 /*3 registros de historial clínico*/
-use veterinaria_patitas_felices;
-
 insert into historial_clinico(id_mascota, id_veterinario, fecha_registro, descripcion)
 VALUES (1, 2, '2024-10-12', 'Infeccion urinaria'),
 (3, 1, '2025-08-01', 'Traumatismo de craneo'),
@@ -85,30 +68,22 @@ VALUES (1, 2, '2024-10-12', 'Infeccion urinaria'),
 
 /*EJERCICIO 7 - Actualizar registros*/
 /*Cambiar la dirección de un dueño (por ID o nombre)*/
-use veterinaria_patitas_felices;
-
 update duenos
 set direccion = 'Celedonio Gutierrez 1259'
 where id = 1;
 
 /*Actualizar la especialidad de un veterinario (por ID o matrícula)*/
-use veterinaria_patitas_felices;
-
 update veterinarios
 set especialidad = 'Emergencias y cuidados críticos'
 where id = 3;
 
 /*Editar la descripción de un historial clínico (por ID)*/
-use veterinaria_patitas_felices;
-
 update historial_clinico
 set descripcion = 'Perdida de vision'
 where id = 2;
 
 /*EJERCICIO 8 - Eliminar registros*/
 /*Eliminar una mascota (por ID o nombre)*/
-use veterinaria_patitas_felices;
-
 delete from mascotas
 where id = 2;
 
@@ -116,8 +91,6 @@ select * from historial_clinico
 where id_mascota = 2;
 
 /*EJERCICIO 9 - JOIN simple*/
-use veterinaria_patitas_felices;
-
 select 
 	ma.nombre nombre_mascota, 
     ma.especie especie_mascota, 
@@ -126,8 +99,6 @@ from mascotas ma
 inner JOIN duenos du on ma.id_dueno = du.id;
 
 /*EJERCICIO 10 - JOIN múltiple con historial*/
-use veterinaria_patitas_felices;
-
 select ma.nombre nombre_mascota,
 	ma.especie especie_mascota,
     concat(du.nombre, ' ', du.apellido) nombre_dueño,
@@ -137,5 +108,4 @@ select ma.nombre nombre_mascota,
 from historial_clinico hc
 inner join mascotas ma on ma.id = hc.id_mascota
 inner join duenos du on du.id = ma.id_dueno
-inner join veterinarios ve on ve.id = hc.id_veterinario
-;
+inner join veterinarios ve on ve.id = hc.id_veterinario;
